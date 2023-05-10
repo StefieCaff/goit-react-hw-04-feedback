@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 
+
 /* components/ styled Components */
 import { LogoTitle } from './Logo/Logo.jsx';
 import { Section } from './Section/Section.jsx'
@@ -10,10 +11,25 @@ import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions.jsx";
 
 export const App = () => {
   //set state
-  const [feedback, setFeedback] = useState({ bad: 0, neutral: 0, good: 0 });
+  const [feedback, setFeedback] = useState(
+    {
+      bad: 0,
+      neutral: 0,
+      good: 0
+    });
   
-  // follow state changes
-  useEffect(() => {}, [feedback]);
+  // add feedback to local storage
+ 
+  useEffect(() => {
+  localStorage.setItem('feedback', JSON.stringify(feedback));
+}, [feedback]);
+
+  useEffect(() => {
+    const feedback = JSON.parse(localStorage.getItem('feedback'));
+    if (feedback) {
+      setFeedback(feedback);
+    }
+  }, [] )
   
   /* helper functions*/
   
@@ -51,7 +67,7 @@ export const App = () => {
     return (
       <> 
         <LogoTitle />
-        <Section title="If you want, 'click' a tally">
+        <Section title="How did your espresso taste today?">
           <FeedbackOptions
             good={feedback.good}
             neutral={feedback.neutral}
@@ -63,7 +79,7 @@ export const App = () => {
           {
             total === 0
               ? (
-                <Notification message = "You'll be the first to add a tally. Woot!"/>
+                <Notification message = "There are no tallies yet. 'Click' an option above to add a tally, Woot!"/>
               )
               : (
                 <Statistics
