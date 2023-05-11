@@ -11,7 +11,11 @@ import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions.jsx";
 /* ************************************************************************* */
 export const App = () => {
   //set state
-  const [feedback, setFeedback] = useState({ bad: 0, neutral: 0, good: 0 });
+  const [feedback, setFeedback] = useState(() => {
+
+    const lSFeedback = JSON.parse(localStorage.getItem('feedback'));
+    return lSFeedback || {good:0, neutral: 0, bad:0};
+  });
 
   // add/ retrieve feedback to local storage
   useEffect(() => {
