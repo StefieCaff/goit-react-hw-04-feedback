@@ -8,18 +8,12 @@ import { Statistics } from './Statistics/Statistics.jsx';
 import { Notification } from './Notification/Notification.jsx';
 import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions.jsx";
 
-
+/* ************************************************************************* */
 export const App = () => {
   //set state
-  const [feedback, setFeedback] = useState(
-    {
-      bad: 0,
-      neutral: 0,
-      good: 0
-    });
-  
-  // add feedback to local storage
- 
+  const [feedback, setFeedback] = useState({ bad: 0, neutral: 0, good: 0 });
+
+  // add/ retrieve feedback to local storage
   useEffect(() => {
   localStorage.setItem('feedback', JSON.stringify(feedback));
 }, [feedback]);
@@ -79,7 +73,7 @@ export const App = () => {
           {
             total === 0
               ? (
-                <Notification message = "There are no tallies yet. 'Click' an option above to add a tally, Woot!"/>
+                <Notification message = "There are no tallies yet. Click an option above to add a tally, Woot!"/>
               )
               : (
                 <Statistics
