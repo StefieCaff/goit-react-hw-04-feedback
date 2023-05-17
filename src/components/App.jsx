@@ -10,18 +10,17 @@ import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions.jsx";
 
 /* ************************************************************************* */
 export const App = () => {
-  //set state
+//set state
   const [feedback, setFeedback] = useState(() => {
-
     const lSFeedback = JSON.parse(localStorage.getItem('feedback'));
     return lSFeedback || {good:0, neutral: 0, bad:0};
   });
 
-  // add/ retrieve feedback to local storage
+// add feedback to local storage
   useEffect(() => {
   localStorage.setItem('feedback', JSON.stringify(feedback));
 }, [feedback]);
-
+//get feedback from local storage
   useEffect(() => {
     const feedback = JSON.parse(localStorage.getItem('feedback'));
     if (feedback) {
@@ -29,18 +28,17 @@ export const App = () => {
     }
   }, [] )
   
-  /* helper functions*/
+/* helper functions*/
   
-  // calculate total tallies on state change
+// calculate total tallies on state change
   const countTotalFeedback = () => {
     return (feedback.good + feedback.bad + feedback.neutral);
   }
 
-  // constant for notification logic
-
+// constant for notification logic
   const total = countTotalFeedback()
   
-  // calculate positive tallies on state change
+// calculate positive tallies on state change
   const countPositiveFeedbackPercentage = () => {
     return (
     isNaN(Math.round((feedback.good / countTotalFeedback()) * 100))
@@ -51,15 +49,15 @@ export const App = () => {
 
 //event handlers
   const handleGoodFeedback = () => {
-    setFeedback(prevFeedback => ({ ...prevFeedback, good: prevFeedback.good + 1}));
+    setFeedback(prev => ({ ...prev, good: prev.good + 1}));
   }
   
   const handleNeutralFeedback = () => {
-    setFeedback(prevFeedback => ({ ...prevFeedback, neutral: prevFeedback.neutral + 1}));
+    setFeedback(prev => ({ ...prev, neutral: prev.neutral + 1}));
   }
  
   const handleBadFeedback = () => {
-    setFeedback(prevFeedback => ({ ...prevFeedback, bad: prevFeedback.bad + 1}));
+    setFeedback(prev => ({ ...prev, bad: prev.bad + 1}));
   }
   
     return (
